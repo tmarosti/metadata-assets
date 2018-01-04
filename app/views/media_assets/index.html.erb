@@ -1,0 +1,100 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Media Assets</h1>
+<p>Please enter search terms:</p>
+<%= form_tag(browse_path, :method => "get", class: "search-form") do %>
+  <p>
+  Filename: <%= text_field_tag :search_name, params[:search_name], placeholder: "Search by file name...", class: "form-control" %>
+  Format: <%= select_tag "format", options_for_select(@formats, params[:format]) %>
+  Format Profile: <%= select_tag "format_profile", options_for_select(@formatProfiles, params[:format_profile]) %>
+  <%= submit_tag "Search", :name => nil %>
+  </p>
+<% end %>
+
+
+<% if @media_assets.present? %>
+<table>
+<thead>
+    <tr>
+      <th>Filename</th>
+      <th>F-Number</th>
+      <th>Created</th>
+      <th>Modified</th>
+      <th>Size</th>
+      <th>Checksum</th>
+    </tr>
+</thead>
+<tbody>
+  <% @media_assets.each do |media_asset| %>
+    <tr style="background-color:beige">
+      <td><%= media_asset.filename %></td>
+      <td><%= media_asset.fumber %></td>
+      <td><%= media_asset.created %></td>
+      <td><%= media_asset.modified %></td>
+      <td><%= media_asset.size %></td>
+      <td><%= media_asset.checksum %></td>
+    </tr>
+    <% if media_asset.General.present? %>
+      <tr>
+        <td colspan=6>
+          <button class="accordion">General</button>
+          <div class="panel">
+            <table>
+              <% media_asset.General.each do |tag| %>
+              <tr style="background-color: tan"><td><%= tag[0] %></td><td><%= tag[1] %></td></tr>
+              <% end %>
+            </table>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+
+    <% if media_asset.VideoStream.present? %>
+      <tr>
+        <td colspan=6>
+          <button class="accordion">Video</button>
+          <div class="panel">
+            <table>
+              <% media_asset.VideoStream.each do |tag| %>
+              <tr style="background-color: tan"><td><%= tag[0] %></td><td><%= tag[1] %></td></tr>
+              <% end %>
+            </table>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+
+    <% if media_asset.AudioStream.present? %>
+      <tr>
+        <td colspan=6>
+          <button class="accordion">Audio (<%= media_asset.AudioStream.count %>)</button>
+          <div class="panel">
+            <table>
+              <% media_asset.AudioStream.each do |channel| %>
+                <!-- <tr style="background-color: tan">
+                  <td><%= channel[0] %></td>
+                </tr> -->
+                <% channel[1].each do |tag| %>
+                  <tr style="background-color: tan"><td><%= tag[0] %></td><td><%= tag[1] %></td></tr>
+                <% end %>
+              <% end %>
+            </table>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+<!--        <td><%= link_to 'Show', media_asset %></td>
+      <td><%= link_to 'Edit', edit_media_asset_path(media_asset) %></td>
+      <td><%= link_to 'Destroy', media_asset, method: :delete, data: { confirm: 'Are you sure?' } %></td> -->
+
+
+  <% end %>
+
+</tbody>
+</table>
+<% end %>
+
+<br>
+
+<!-- <%= link_to 'New Media Asset', new_media_asset_path %> -->
+

@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Filename:</strong>
+  <%= @media_asset.filename %>
+</p>
+
+<p>
+  <strong>Fumber:</strong>
+  <%= @media_asset.fumber %>
+</p>
+
+<p>
+  <strong>Created:</strong>
+  <%= @media_asset.created %>
+</p>
+
+<p>
+  <strong>Modified:</strong>
+  <%= @media_asset.modified %>
+</p>
+
+<p>
+  <strong>Size:</strong>
+  <%= @media_asset.size %>
+</p>
+
+<p>
+  <strong>Checksum:</strong>
+  <%= @media_asset.checksum %>
+</p>
+
+<%= link_to 'Edit', edit_media_asset_path(@media_asset) %> |
+<%= link_to 'Back', media_assets_path %>
